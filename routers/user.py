@@ -35,6 +35,13 @@ async def get_user_by_id(db: Annotated[Session, Depends(get_db)], user_id: int):
         )
     else:
         return user
+
+#--------------------------------------------------------------------------------
+@router.get("/user_id/tasks")
+async def tasks_by_user__id(db: Annotated[Session, Depends(get_db)], user_id: int):
+    tasks = db.scalars(select(Task).where (Task.user_id == user_id)).all()
+    return tasks
+
 #---------------------------------------------------------------------------------
 
 @router.post("/create")
